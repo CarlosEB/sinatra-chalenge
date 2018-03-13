@@ -1,0 +1,33 @@
+.container
+    /img src="app/assets/pendrive.png"
+    
+    form.form-group action="/users_stats" method="post" onsubmit="return sendform()"
+        .col-md-6
+            select#email.form-control name="email" onchange="canFilter()"
+                option value="" Choose an user...
+                - for item in @users.order(:name)
+                    option value=item.email =item.name
+            br
+            input.btn.btn-primary.disabled type="submit" id="btnFilter"
+    .col-md-12
+        ul
+        - if (!@stats.nil?)
+            h5 =@user.name + " (showing last 10 access)"
+            - for item in @stats
+                li =item.access_date.strftime('%a %b %d %H:%M:%S %Z %Y') + " - " + item.url
+                
+javascript:
+
+      var btn = document.querySelector('#btnFilter')
+      var user = document.querySelector('#email')
+
+      function canFilter() {
+        if (user.value != "")
+            btn.classList.remove('disabled');
+        else
+            btn.classList.add('disabled');
+      }
+      
+      function sendform() {
+        return user.value != ""
+      }
