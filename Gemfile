@@ -12,6 +12,7 @@ gem 'pg', '~> 1.0'
 gem 'rake', '~> 11.2', '>= 11.2.2'
 gem 'activemodel', require: 'active_model'
 gem "puma"
+gem 'sinatra-cross_origin', '~> 0.3.2'
 
 group :test do
   gem "rspec"
