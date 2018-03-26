@@ -9,6 +9,7 @@ require 'coffee-script'
 require 'execjs'
 require "sinatra/activerecord"
 require './config/environments' #Database configuration
+require 'sinatra/cross_origin'
 
 class TrackApp < Sinatra::Base
 
@@ -28,11 +29,17 @@ class TrackApp < Sinatra::Base
   environment.js_compressor  = :uglify
   environment.css_compressor = :scss
 
-  # Paths
+  # Paths and cross origin
   configure do
       set :views, "#{settings.root}/app/views"
+      enable :cross_origin
   end
 
+  # Enable Cross origin header
+  before do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+  end
+	
   # Get assets
   get "/app/assets/*" do
     env["PATH_INFO"].sub!("/app/assets", "")
